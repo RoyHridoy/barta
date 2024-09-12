@@ -4,7 +4,8 @@
     </x-slot:heading>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" action="{{ route('register') }}" method="POST">
+            @csrf
             <!-- First Name -->
             <div>
                 <label for="firstName" class="block text-sm font-medium leading-6 text-gray-900">First Name</label>
@@ -61,9 +62,9 @@
             </div>
         </form>
 
-        <p class="mt-10 text-center text-sm text-gray-500">
+        <p class="mt-10 text-sm text-center text-gray-500">
             Already a member?
-            <a href="./login.html" class="font-semibold leading-6 text-black hover:text-black">Sign In</a>
+            <a href="{{ route('login') }}" class="font-semibold leading-6 text-black hover:text-black">Sign In</a>
         </p>
     </div>
 
