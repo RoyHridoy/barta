@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -11,7 +13,7 @@ class ProfileController extends Controller
         return view('profile.edit');
     }
 
-    public function show(Request $request)
+    public function show(): View
     {
         return view('profile.show');
     }

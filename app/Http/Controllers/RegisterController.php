@@ -18,6 +18,6 @@ class RegisterController extends Controller
     {
         User::create($request->validated());
 
-        return redirect()->intended('login')->with('success', "You have successfully created your account. Please login to continue.");
+        return redirect()->route('login')->with('success', "You have successfully created your account. Please login to continue.");
     }
 }

@@ -8,6 +8,7 @@
                     </a>
                 </div>
             </div>
+            @auth
             <div class="hidden gap-2 sm:ml-6 sm:flex sm:items-center">
                 <div class="relative ml-3" x-data="{ open: false }">
                     <div>
@@ -15,8 +16,20 @@
                             class="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="https://avatars.githubusercontent.com/u/831997"
-                                alt="Ahmed Shamim Hasan Shaon" />
+                            @if ( auth()->user()->avatar)
+                                <img class="w-8 h-8 rounded-full" src="https://avatars.githubusercontent.com/u/831997" alt="Ahmed Shamim Hasan Shaon" />
+                            @else
+                                <svg
+                                    class="w-8 h-8 text-gray-400 border border-gray-500 rounded-full"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    aria-hidden="true">
+                                    <path
+                                    fill-rule="evenodd"
+                                    d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                                    clip-rule="evenodd" />
+                                </svg>
+                            @endif
                         </button>
                     </div>
 
@@ -33,6 +46,18 @@
                     </div>
                 </div>
             </div>
+            @endauth
+            @guest
+            <div class="hidden gap-2 sm:ml-6 sm:flex sm:items-center">
+                <div class="relative ml-3">
+                    <a href="{{ route('login') }}"
+                    class="px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800">Login</a>
+        
+                    <a href="{{ route('register') }}"
+                    class="px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800">Register</a>
+                </div>
+            </div>
+            @endguest
             <div class="flex items-center -mr-2 sm:hidden">
                 <!-- Mobile menu button -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" type="button"
@@ -58,15 +83,24 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div x-show="mobileMenuOpen" class="sm:hidden" id="mobile-menu">
-        <a href="{{ route('profile') }}"
-            class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Your
-            Profile</a>
-        <a href="{{ route('edit-profile') }}"
-            class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Edit
-            Profile</a>
-        <button form="logout"
-            class="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:bg-gray-100 hover:text-gray-800">Sign
-            out</button>
+        @auth
+            <a href="{{ route('profile') }}"
+                class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Your
+                Profile</a>
+            <a href="{{ route('edit-profile') }}"
+                class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Edit
+                Profile</a>
+            <button form="logout"
+                class="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:bg-gray-100 hover:text-gray-800">Sign
+                out</button>
+        @endauth
+        @guest
+            <a href="{{ route('login') }}"
+            class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Login</a>
+
+            <a href="{{ route('register') }}"
+            class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Register</a>
+        @endguest
     </div>
 </nav>
 
