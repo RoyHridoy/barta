@@ -20,5 +20,6 @@ Route::middleware( 'guest' )->group( function () {
 Route::middleware( ['auth'] )->group( function () {
     Route::get( 'profile', [ProfileController::class, 'show'] )->name( 'profile' );
     Route::get( 'edit-profile', [ProfileController::class, 'edit'] )->name( 'edit-profile' );
-    Route::delete( '/logout', LogoutController::class )->name( 'logout' );
+    Route::delete( 'logout', LogoutController::class )->name( 'logout' );
+    Route::patch( 'edit-profile', [ProfileController::class, 'update'] );
 } );

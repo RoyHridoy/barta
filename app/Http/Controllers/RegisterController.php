@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserProfileRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -14,7 +14,7 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function store(UserRequest $request): RedirectResponse
+    public function store(UserProfileRequest $request): RedirectResponse
     {
         User::create($request->validated());
 

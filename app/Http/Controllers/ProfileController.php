@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request)
+    public function edit(): View
     {
         return view('profile.edit');
     }
@@ -16,5 +15,11 @@ class ProfileController extends Controller
     public function show(): View
     {
         return view('profile.show');
+    }
+
+    public function update(UpdateUserProfileRequest $request)
+    {
+        dd($request->all());
+        return "HELLO";
     }
 }
