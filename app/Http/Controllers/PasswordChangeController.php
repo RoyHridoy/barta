@@ -10,14 +10,16 @@ class PasswordChangeController extends Controller
 {
     public function index()
     {
-        return view('profile.password-change');
+        return view( 'profile.password-change' );
     }
 
-    public function update(PasswordChangeRequest $request)
+    public function update( PasswordChangeRequest $request )
     {
         $request->validated();
-        DB::table('users')->where('id','=',auth()->user()->id)->update([
-            'password' => Hash::make($request->input('password'))
-        ]);
+        DB::table( 'users' )->where( 'id', '=', auth()->user()->id )->update( [
+            'password' => Hash::make( $request->input( 'password' ) ),
+        ] );
+
+        return redirect(route('edit-profile'))->with('success', 'Password changed successfully');
     }
 }

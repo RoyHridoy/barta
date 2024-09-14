@@ -123,7 +123,7 @@
 		</div>
 
 		<div class="flex items-center justify-end mt-6 gap-x-6">
-			<button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+			<button type="reset" class="text-sm font-semibold leading-6 text-gray-900">
 				Cancel
 			</button>
 			<button type="submit"
