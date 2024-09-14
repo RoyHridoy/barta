@@ -17,7 +17,7 @@
                             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="sr-only">Open user menu</span>
                             @if ( auth()->user()->avatar)
-                                <img class="w-8 h-8 rounded-full" src="https://avatars.githubusercontent.com/u/831997" alt="Ahmed Shamim Hasan Shaon" />
+                                <img class="w-8 h-8 rounded-full" src="{{ asset("storage/". auth()->user()->avatar) }}" alt="{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}" />
                             @else
                                 <svg
                                     class="w-8 h-8 text-gray-400 border border-gray-500 rounded-full"

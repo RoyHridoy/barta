@@ -10,7 +10,7 @@
             @if (auth()->user()->avatar)
               <img
               class="w-32 h-32 border-2 border-gray-800 rounded-full"
-              src="https://avatars.githubusercontent.com/u/831997"
+              src="{{ asset("storage/".auth()->user()->avatar) }}"
               alt="{{ auth()->user()->firstName }}" />
             @else
               <svg

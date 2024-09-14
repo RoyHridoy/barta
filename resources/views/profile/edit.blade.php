@@ -6,7 +6,13 @@
 		@method('PATCH')
 		<div class="space-y-12">
 			<div class="pb-12 border-b border-gray-900/10">
-				<h2 class="text-xl font-semibold leading-7 text-gray-900">
+				@session('success')
+					<div class="p-2 font-bold text-center text-teal-900 bg-teal-300 rounded">
+						{{ session('success') }}
+					</div>
+				@endsession
+
+				<h2 class="mt-2 text-xl font-semibold leading-7 text-gray-900">
 					Edit Profile
 				</h2>
 				<p class="mt-1 text-sm leading-6 text-gray-600">
@@ -17,22 +23,11 @@
 				<div class="pb-12 mt-10 border-b border-gray-900/10">
 					<div class="pb-10 mt-10 col-span-full">
 						<label class="block text-sm font-medium leading-6 text-gray-900">Avatar</label>
-						<div class="flex items-center mt-2 gap-x-3">
+						<div class="relative flex items-center mt-2 gap-x-3">
 							<input class="hidden" type="file" name="avatar" id="avatar" />
-							<script>
-
-							const uploadPictureButton = document.querySelector("#avatar");
-
-							uploadPictureButton.addEventListener("change", displayPicture);
-						   
-							function displayPicture(event) {
-								let image = document.getElementById("photo");
-								image.src = URL.createObjectURL(event.target.files[0]);
-							};
-							</script>
-							
-							@if (!auth()->user()->avatar)
-								<img class="w-12 h-12 rounded-full" id="photo" src="https://avatars.githubusercontent.com/u/831997" alt="Ahmed Shamim Hasan Shaon" />
+							<img class="absolute left-0 object-cover w-12 h-12 rounded-full opacity-0" id="temp-photo" src="" />
+							@if (auth()->user()->avatar)
+								<img class="object-cover w-12 h-12 rounded-full" id="photo" src="{{ asset("storage/".auth()->user()->avatar, ) }}" alt="{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}" />
 							@else
 							<svg class="w-12 h-12 text-gray-300 border-2 rounded-full" viewBox="0 0 24 24" fill="currentColor"
 								aria-hidden="true">
@@ -47,7 +42,9 @@
 									Change
 								</div>
 							</label>
+							
 						</div>
+						<p class="mt-1 text-sm text-slate-400">* image size must be under 500kb</p>
 						@error('avatar')
 						<span class="text-sm text-red-500">{{ $message }}</span>
 						@enderror
@@ -95,7 +92,7 @@
 
 						<div class="col-span-full">
 							<label for="password"
-								class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+								class="block text-sm font-medium leading-6 text-gray-900">Password to Confirm Yourself again</label>
 							<div class="mt-2">
 								<input type="password" name="password" id="password" autocomplete="password"
 									class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
@@ -138,3 +135,14 @@
 	<!-- /Profile Edit Form -->
 
 </x-app-layout>
+
+<script>
+	const uploadAvatarButton = document.querySelector("#avatar");
+	uploadAvatarButton.addEventListener("change", showAvatar);
+
+	function showAvatar(event) {
+		let image = document.getElementById("temp-photo");
+		image.src = URL.createObjectURL(event.target.files[0]);
+		image.classList.add('opacity-100');
+	};
+</script>
