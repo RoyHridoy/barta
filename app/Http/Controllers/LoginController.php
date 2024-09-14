@@ -16,7 +16,9 @@ class LoginController extends Controller
 
     public function authenticate( LoginRequest $request ): RedirectResponse
     {
-        if ( Auth::attempt( $request->validated() ) ) {
+        $remember = $request->input( 'rememberMe' ) ? true : false;
+
+        if ( Auth::attempt( $request->validated(), $remember ) ) {
             $request->session()->regenerate();
             return redirect()->intended( route('home') );
         }

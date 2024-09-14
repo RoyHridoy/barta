@@ -40,6 +40,11 @@
                 @enderror
             </div>
 
+            <div class="flex items-center mb-4">
+                <input id="rememberMe" type="checkbox" name="rememberMe" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label for="rememberMe" class="text-sm font-medium text-gray-900 ms-2">Remember me</label>
+            </div>
+            
             <div>
                 <button type="submit"
                     class="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
