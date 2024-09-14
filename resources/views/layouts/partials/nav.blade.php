@@ -41,6 +41,8 @@
                             role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                         <a href="{{ route('edit-profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             role="menuitem" tabindex="-1" id="user-menu-item-1">Edit Profile</a>
+                        <a href="{{ route('password-change') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            role="menuitem" tabindex="-1" id="user-menu-item-2">Change Password</a>
                         <button form="logout" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100" role="menuitem"
                             tabindex="-1" id="user-menu-item-2">Sign out</button>
                     </div>
@@ -90,6 +92,8 @@
             <a href="{{ route('edit-profile') }}"
                 class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Edit
                 Profile</a>
+            <a href="{{ route('password-change') }}"
+                class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Change Password</a>
             <button form="logout"
                 class="block w-full px-4 py-2 text-base font-medium text-left text-gray-500 hover:bg-gray-100 hover:text-gray-800">Sign
                 out</button>
