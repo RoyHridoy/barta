@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html class="html h-full bg-white">
+<html class="h-full bg-white html">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
+      <title>Barta || Social Media App</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link
@@ -25,16 +26,16 @@
     </style>
   </head>
   <body class="h-full">
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="flex flex-col justify-center min-h-full px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <a
-          href="./index.html"
-          class="text-center text-6xl font-bold text-gray-900"
+          href="{{ route('home') }}"
+          class="text-6xl font-bold text-center text-gray-900"
           ><h1>Barta</h1></a
         >
 
         <h1
-          class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          class="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
           {{ $heading }}
         </h1>
       </div>

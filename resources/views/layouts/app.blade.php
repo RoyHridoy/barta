@@ -6,6 +6,7 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
+    <title>Barta || Social Media App</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- AlpineJS CDN -->
@@ -37,7 +38,7 @@
     </header>
 
     <main
-      class="container max-w-xl mx-auto space-y-8 mt-8 px-2 md:px-0 min-h-screen">
+      class="container max-w-xl min-h-screen px-2 mx-auto mt-8 space-y-8 md:px-0">
 
     {{ $slot }}
 
