@@ -1,20 +1,12 @@
 <x-app-layout>
-    @guest
-    <div class="p-12 text-center border border-gray-800 rounded-xl">
-        <h1 class="items-center justify-center text-3xl">Welcome to Barta!</h1>
-    </div>
-    @endguest
 
-    @auth
-    @session('success')
-        <x-flash type="success"/>
-    @endsession
     <!-- Barta Create Post Card -->
-    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data" class="px-4 py-5 mx-auto space-y-3 bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6">
+    <form method="POST" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data" class="px-4 py-5 mx-auto space-y-3 bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6">
         @csrf
+        @method('PATCH')
         <!-- Create Post Card Top -->
         <div>
-            <div class="flex items-start /space-x-3/">
+            <div class="flex flex-col gap-5 /space-x-3/">
                 <!-- User Avatar -->
                 <div class="flex-shrink-0">
                     @if (auth()->user()->avatar)
@@ -26,11 +18,12 @@
                 <!-- /User Avatar -->
                 <!-- Content -->
                 <div class="w-full font-normal text-gray-700">
+                    <img class="object-cover w-full mb-3 rounded-lg min-h-auto max-h-64 md:max-h-72" src="{{ asset('storage/' . $post->image) }}" alt="">
                     <textarea
-                        class="block w-full pt-2 ml-2 text-gray-900 border-none rounded-lg outline-none focus:ring-0 focus:ring-offset-0"
+                        class="block w-full p-2 text-gray-900 border rounded-lg outline-none focus:ring-0 focus:ring-offset-0"
                         name="description"
                         rows="2"
-                        placeholder="What's going on, {{ auth()->user()->firstName }}?">{{ old('description') }}</textarea>
+                        placeholder="What's going on, {{ auth()->user()->firstName }}?">{{ $post->description }}</textarea>
                         @error('description')
                         <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -89,14 +82,4 @@
         <!-- /Create Post Card Bottom -->
     </form>
     <!-- /Barta Create Post Card -->
-    @endauth
-
-    @forelse ($posts as $post)
-        <x-article :post="$post"/>
-    @empty
-        <div>
-            <h2>No posts found.</h2>
-        </div>
-    @endforelse
-    {{ $posts->links() }}
 </x-app-layout>
