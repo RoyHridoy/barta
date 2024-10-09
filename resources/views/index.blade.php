@@ -10,11 +10,12 @@
         <x-flash type="success"/>
     @endsession
     <!-- Barta Create Post Card -->
-    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data" class="px-4 py-5 mx-auto space-y-3 bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6">
+    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data" class="relative px-4 py-5 mx-auto space-y-3 bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6">
         @csrf
         <!-- Create Post Card Top -->
+        <img class="object-cover w-full min-h-0 rounded-md opacity-0 -z-10" id="temp-photo" src="" />
         <div>
-            <div class="flex items-start /space-x-3/">
+            <div class="relative flex items-start /space-x-3/">
                 <!-- User Avatar -->
                 <div class="flex-shrink-0">
                     @if (auth()->user()->avatar)
@@ -95,8 +96,21 @@
         <x-article :post="$post"/>
     @empty
         <div>
-            <h2>No posts found.</h2>
+            <h2 class="p-5 text-white rounded-md bg-black/80">No posts found.</h2>
         </div>
     @endforelse
-    {{ $posts->links() }}
+    <div class="sm:-ml-10">
+        {{ $posts->links() }}
+    </div>
 </x-app-layout>
+
+<script>
+	const uploadAvatarButton = document.querySelector("#image");
+	uploadAvatarButton.addEventListener("change", showAvatar);
+
+	function showAvatar(event) {
+		let image = document.getElementById("temp-photo");
+		image.src = URL.createObjectURL(event.target.files[0]);
+		image.classList.add('opacity-100');
+	};
+</script>

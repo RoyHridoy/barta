@@ -17,8 +17,9 @@
                 </div>
                 <!-- /User Avatar -->
                 <!-- Content -->
-                <div class="w-full font-normal text-gray-700">
-                    <img class="object-cover w-full mb-3 rounded-lg min-h-auto max-h-64 md:max-h-72" src="{{ asset('storage/' . $post->image) }}" alt="">
+                <div class="relative w-full font-normal text-gray-700">
+                    <img class="object-cover w-full min-h-0 rounded-md opacity-0" id="temp-photo" src="" />
+                    <img class="object-cover w-full mb-3 rounded-lg min-h-auto" src="{{ asset('storage/' . $post->image) }}" alt="">
                     <textarea
                         class="block w-full p-2 text-gray-900 border rounded-lg outline-none focus:ring-0 focus:ring-offset-0"
                         name="description"
@@ -83,3 +84,15 @@
     </form>
     <!-- /Barta Create Post Card -->
 </x-app-layout>
+
+<script>
+	const uploadAvatarButton = document.querySelector("#image");
+	uploadAvatarButton.addEventListener("change", showAvatar);
+
+	function showAvatar(event) {
+		let image = document.getElementById("temp-photo");
+        image.nextElementSibling.classList.add('hidden')
+		image.src = URL.createObjectURL(event.target.files[0]);
+		image.classList.add('opacity-100', 'mb-2');
+	};
+</script>

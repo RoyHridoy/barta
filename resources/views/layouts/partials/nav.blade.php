@@ -8,6 +8,15 @@
                     </a>
                 </div>
             </div>
+            <form action="" method="GET" class="flex items-center">
+                <input
+                        type="text"
+                        name="search"
+                        value="{{ request()->query('search') }}"
+                        placeholder="Search by author email, username or fullName..."
+                        class="h-10 px-5 text-sm bg-white border-2 border-gray-300 rounded-full sm:w-[400px] focus:outline-none"
+                />
+            </form>
             @auth
             <div class="hidden gap-2 sm:ml-6 sm:flex sm:items-center">
                 <div class="relative ml-3" x-data="{ open: false }">
@@ -19,7 +28,7 @@
                             @if ( auth()->user()->avatar )
                                 <img class="w-8 h-8 rounded-full" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->fullName }}" />
                             @else
-                                <img class="w-8 h-8 text-gray-400 border border-gray-500 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->firstName }}+{{ auth()->user()->lastName }}" alt="">
+                                <img class="w-8 h-8 text-gray-400 border border-gray-500 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->fullName }}" alt="{{ auth()->user()->fullName }}">
                             @endif
                         </button>
                     </div>

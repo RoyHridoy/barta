@@ -13,16 +13,7 @@
               src="{{ asset("storage/".auth()->user()->avatar) }}"
               alt="{{ auth()->user()->firstName }}" />
             @else
-              <svg
-                class="w-32 h-32 text-gray-400 border-2 border-gray-500 rounded-full"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true">
-                <path
-                  fill-rule="evenodd"
-                  d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                  clip-rule="evenodd" />
-              </svg>
+            <img class="w-32 h-32 border-2 border-gray-800 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->fullName }}" alt="{{ auth()->user()->fullName }}">
             @endif
             <span
               class="bottom-2 right-4 absolute w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-500 rounded-full"></span>
@@ -31,7 +22,7 @@
 
           <!-- User Meta -->
           <div>
-            <h1 class="font-bold md:text-2xl">{{ auth()->user()->firstName }} {{ auth()->user()->lastName }}</h1>
+            <h1 class="font-bold md:text-2xl">{{ auth()->user()->fullName }}</h1>
             <p class="text-gray-700">{{ auth()->user()->bio }}</p>
           </div>
           <!-- / User Meta -->

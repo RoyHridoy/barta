@@ -96,7 +96,7 @@
         <a href="{{ route('posts.show', $post->id) }}">
             <img
             src="{{ asset('storage/' . $post->image) }}"
-            class="object-cover w-full mb-3 rounded-lg min-h-auto max-h-64 md:max-h-72"
+            class="object-cover w-full mb-3 rounded-lg min-h-auto {{ $postDetails ? '' : 'max-h-64 md:max-h-72' }}"
             alt="" />
         </a>
         @if ($postDetails)
