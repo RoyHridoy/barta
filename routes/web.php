@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CommentDestroyController;
+use App\Http\Controllers\CommentStoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -33,7 +35,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('posts', PostStoreController::class)->middleware('auth')->name('posts.store');
-Route::get('posts/{post}/edit', PostEditController::class)->middleware('auth')->can('edit','post')->name('posts.edit');
+Route::get('posts/{post}/edit', PostEditController::class)->middleware('auth')->can('edit', 'post')->name('posts.edit');
 Route::get('posts/{post}', PostShowController::class)->name('posts.show');
-Route::patch('posts/{post}', PostUpdateController::class)->middleware('auth')->can('edit','post')->name('posts.update');
-Route::delete('posts/{post}', PostDestroyController::class)->middleware('auth')->can('delete','post');
+Route::patch('posts/{post}', PostUpdateController::class)->middleware('auth')->can('edit', 'post')->name('posts.update');
+Route::delete('posts/{post}', PostDestroyController::class)->middleware('auth')->can('delete', 'post');
+
+Route::post('posts/{post}/comments', CommentStoreController::class)->middleware('auth')->name('comments.store');
+// Route::get('posts/{post}/edit', PostEditController::class)->middleware('auth')->can('edit', 'post')->name('posts.edit');
+// Route::patch('posts/{post}', PostUpdateController::class)->middleware('auth')->can('edit', 'post')->name('posts.update');
+Route::delete('comments/{comment}', CommentDestroyController::class)->middleware('auth')->can('delete', 'comment')->name('comments.destroy');

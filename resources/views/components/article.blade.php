@@ -1,4 +1,4 @@
-@props(['post', 'postDetails' => str()->of($post->description)->wordCount() < 15 ])
+@props(['post', 'isSmallPost' => str()->of($post->description)->wordCount() < 15, 'isPostDetailsPage' => false ])
 <article
     class="px-4 py-5 mx-auto bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6">
     <!-- Barta Card Top -->
@@ -36,7 +36,7 @@
             <!-- /User Info -->
         </div>
 
-        @can(['edit', 'delete'], $post)
+        @canany(['edit', 'delete'], $post)
         <!-- Card Action Dropdown -->
         <div class="flex self-center flex-shrink-0" x-data="{ open: false }">
             <div class="relative inline-block text-left">
@@ -87,7 +87,7 @@
             </div>
         </div>
         <!-- /Card Action Dropdown -->
-        @endcan
+        @endcanany
         </div>
     </header>
 
@@ -96,24 +96,123 @@
         <a href="{{ route('posts.show', $post->id) }}">
             <img
             src="{{ asset('storage/' . $post->image) }}"
-            class="object-cover w-full mb-3 rounded-lg min-h-auto {{ $postDetails ? '' : 'max-h-64 md:max-h-72' }}"
+            class="object-cover w-full mb-3 rounded-lg min-h-auto {{ $isPostDetailsPage ? '' : 'max-h-64 md:max-h-72' }}"
             alt="" />
         </a>
-        @if ($postDetails)
+        @if ($isSmallPost || $isPostDetailsPage)
             {{ $post->description }}
         @else
-            {{ str()->words($post->description,12) }}
-            <a href="posts/{{ $post->id }}" class="text-sm text-blue-500">See Details</a>
+            {{ str()->words($post->description,14) }}
+            <a href="{{ route('posts.show', $post->id) }}" class="text-sm text-blue-500">See Details</a>
         @endif
     </div>
 
     <!-- Date Created & View Stat -->
     <div class="flex items-center gap-2 my-2 text-xs text-gray-500">
         <span class="">{{ $post->created_at->diffForHumans() }}</span>
+        @if ($isPostDetailsPage)
+            <span class="">•</span>
+            <span>{{ count($post->comments) }} comments</span>
+        @endif
         <span class="">•</span>
         <span>4,450 views</span>
     </div>
-    <form action="posts/{{ $post->id }}" method="POST" id="delete-form-{{ $post->id }}" class="hidden">
+
+    @if ($isPostDetailsPage && auth()->user())
+        <hr class="my-6" />
+        <!-- Barta Create Comment Form -->
+        <form
+        action="{{ route('comments.store', $post->id) }}"
+        method="POST">
+        @csrf
+            <!-- Create Comment Card Top -->
+            <div>
+                <div class="flex items-start space-x-3">
+                    <!-- User Avatar -->
+                    <div class="flex-shrink-0">
+                        @if (auth()->user()->avatar)
+                            <img class="object-cover w-10 h-10 rounded-full" src="{{ asset( 'storage/' . auth()->user()->avatar ) }}" alt="{{ auth()->user()->fullName }}">
+                        @else
+                            <img class="object-cover w-10 h-10 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->fullName }}" alt="{{ auth()->user()->fullName }}">
+                        @endif
+                    </div>
+                    <!-- /User Avatar -->
+
+                    <!-- Auto Resizing Comment Box -->
+                    <div class="w-full font-normal text-gray-700">
+                        <textarea
+                            x-data="{
+                                resize () {
+                                    $el.style.height = '0px';
+                                    $el.style.height = $el.scrollHeight + 'px'
+                                }
+                            }"
+                            x-init="resize()"
+                            @input="resize()"
+                            type="text"
+                            name="body"
+                            placeholder="Write a comment..."
+                            class="flex w-full h-auto min-h-[40px] px-3 py-2 text-sm bg-gray-100 focus:bg-white border border-sm rounded-lg border-neutral-300 ring-offset-background placeholder:text-neutral-400 focus:border-neutral-300 focus:outline-none focus:ring-1 focus:ring-offset-0 focus:ring-neutral-400 disabled:cursor-not-allowed disabled:opacity-50 text-gray-900"></textarea>
+                            @error('body')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Comment Card Bottom -->
+            <div>
+                <!-- Card Bottom Action Buttons -->
+                <div class="flex items-center justify-end">
+                    <button
+                    type="submit"
+                    class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-white bg-gray-800 rounded-full hover:bg-black">
+                    Comment
+                    </button>
+                </div>
+                <!-- /Card Bottom Action Buttons -->
+            </div>
+            <!-- /Create Comment Card Bottom -->
+        </form>
+        <!-- /Barta Create Comment Form -->
+    @endif
+
+    @if (!$isPostDetailsPage)
+    <!-- Barta Card Bottom -->
+    <footer class="pt-2 border-t border-gray-200">
+        <!-- Card Bottom Action Buttons -->
+        <div class="flex items-center justify-between">
+            <div class="flex gap-8 text-gray-600">
+            <!-- Comment Button -->
+            <a
+                href="{{ route('posts.show', $post->id) }}"
+                type="button"
+                class="flex items-center gap-2 p-2 -m-2 text-xs text-gray-600 rounded-full hover:text-gray-800">
+                <span class="sr-only">Comment</span>
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-5 h-5">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
+                </svg>
+
+                <p>{{ $post->comments_count }}</p>
+            </a>
+            <!-- /Comment Button -->
+            </div>
+        </div>
+        <!-- /Card Bottom Action Buttons -->
+    </footer>
+    <!-- /Barta Card Bottom -->
+    @endif
+
+    <form action="{{ route('posts.show', $post->id) }}" method="POST" id="delete-form-{{ $post->id }}" class="hidden">
         @csrf
         @method('DELETE')
     </form>

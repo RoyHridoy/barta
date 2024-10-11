@@ -9,10 +9,10 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request)
     {
         $search = $request->query('search');
-        $posts = Post::with('user')
+        $posts = Post::with('user')->withCount('comments')
                     ->when(request()->query('search'), function ($query) use ($search) {
                         $query->whereRelation('user', 'username', 'LIKE', "%{$search}%")
                             ->orWhereRelation('user', 'email', 'LIKE', "%{$search}%")

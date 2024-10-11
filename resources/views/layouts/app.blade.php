@@ -1,4 +1,4 @@
-
+@props(['isLargeLayout' => false])
 <!DOCTYPE html>
 <html>
   <head>
@@ -38,7 +38,7 @@
     </header>
 
     <main
-      class="container max-w-xl min-h-screen px-2 mx-auto mt-8 space-y-8 md:px-0">
+      class="container min-h-screen px-2 mx-auto mt-8 space-y-8 md:px-0 {{ $isLargeLayout ? 'max-w-2xl' : 'max-w-xl' }}">
 
     {{ $slot }}
 

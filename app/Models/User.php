@@ -60,15 +60,13 @@ class User extends Authenticatable
         );
     }
 
-    // protected function avatar(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn() => auth()->user()->avatar ??= 'https://ui-avatars.com/api/?name=John+Doe?background=0D8ABC&color=fff',
-    //     );
-    // }
-
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

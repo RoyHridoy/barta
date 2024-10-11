@@ -8,7 +8,7 @@
                     </a>
                 </div>
             </div>
-            <form action="" method="GET" class="flex items-center">
+            <form action="{{ route('home') }}" method="GET" class="flex items-center">
                 <input
                         type="text"
                         name="search"
