@@ -22,13 +22,13 @@
             <!-- User Info -->
             <div class="flex flex-col flex-1 min-w-0 text-gray-900">
             <a
-                href="#"
+                href="{{ route('profileView', $post->user->username) }}"
                 class="font-semibold hover:underline line-clamp-1">
                 {{ $post->user->fullName }}
             </a>
 
             <a
-                href="#"
+                href="{{ route('profileView', $post->user->username) }}"
                 class="text-sm text-gray-500 hover:underline line-clamp-1">
                 {{ '@' . $post->user->username }}
             </a>
@@ -68,7 +68,7 @@
                 aria-labelledby="user-menu-button"
                 tabindex="-1">
                 <a
-                    href="/posts/{{ $post->id }}/edit"
+                    href="{{ route('posts.edit', $post->id) }}"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     role="menuitem"
                     tabindex="-1"
@@ -114,8 +114,6 @@
             <span class="">•</span>
             <span>{{ count($post->comments) }} comments</span>
         @endif
-        <span class="">•</span>
-        <span>4,450 views</span>
     </div>
 
     @if ($isPostDetailsPage && auth()->user())

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :isLargeLayout="true">
       <!-- Cover Container -->
       <section
         class="bg-white border-2 p-8 border-gray-800 rounded-xl min-h-[400px] space-y-8 flex items-center flex-col justify-center">
@@ -7,13 +7,13 @@
           class="flex flex-col items-center justify-center gap-4 text-center">
           <!-- Avatar -->
           <div class="relative">
-            @if (auth()->user()->avatar)
+            @if ($user->avatar)
               <img
               class="w-32 h-32 border-2 border-gray-800 rounded-full"
-              src="{{ asset("storage/".auth()->user()->avatar) }}"
-              alt="{{ auth()->user()->firstName }}" />
+              src="{{ asset("storage/".$user->avatar) }}"
+              alt="{{ $user->fullName }}" />
             @else
-            <img class="w-32 h-32 border-2 border-gray-800 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ auth()->user()->fullName }}" alt="{{ auth()->user()->fullName }}">
+            <img class="w-32 h-32 border-2 border-gray-800 rounded-full" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name={{ $user->fullName }}" alt="{{ $user->fullName }}">
             @endif
             <span
               class="bottom-2 right-4 absolute w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-500 rounded-full"></span>
@@ -22,13 +22,31 @@
 
           <!-- User Meta -->
           <div>
-            <h1 class="font-bold md:text-2xl">{{ auth()->user()->fullName }}</h1>
-            <p class="text-gray-700">{{ auth()->user()->bio }}</p>
+            <h1 class="font-bold md:text-2xl">{{ $user->fullName }}</h1>
+            <p class="text-gray-700">{{ $user->bio }}</p>
           </div>
           <!-- / User Meta -->
         </div>
         <!-- /Profile Info -->
 
+        <!-- Profile Stats -->
+        <div
+        class="flex flex-row items-center justify-center gap-16 text-center">
+        <!-- Total Posts Count -->
+        <div class="flex flex-col items-center justify-center">
+            <h4 class="font-bold sm:text-xl">{{ $posts->total() }}</h4>
+            <p class="text-gray-600">Posts</p>
+        </div>
+
+        <!-- Total Comments Count -->
+        <div class="flex flex-col items-center justify-center">
+            <h4 class="font-bold sm:text-xl">{{ $totalComments }}</h4>
+            <p class="text-gray-600">Comments</p>
+        </div>
+        </div>
+        <!-- /Profile Stats -->
+
+        @if ($user->id === auth()->user()->id)
         <!-- Edit Profile Button (Only visible to the profile owner) -->
         <a
           href="{{ route('edit-profile') }}"
@@ -50,6 +68,34 @@
           Edit Profile
         </a>
         <!-- /Edit Profile Button -->
-      </section>
+        @endif
+    </section>
 
+    @if($user->id === auth()->user()->id)
+        {{-- Create Barta --}}
+        <x-create-barta/>
+    @endif
+
+
+    @forelse ($posts as $post)
+        <x-article :post="$post"/>
+    @empty
+        <div>
+            <h2 class="p-5 text-white rounded-md bg-black/80">You haven't create any barta</h2>
+        </div>
+    @endforelse
+    <div>
+        {{ $posts->links() }}
+    </div>
 </x-app-layout>
+
+<script>
+	const uploadAvatarButton = document.querySelector("#image");
+	uploadAvatarButton.addEventListener("change", showAvatar);
+
+	function showAvatar(event) {
+		let image = document.getElementById("temp-photo");
+		image.src = URL.createObjectURL(event.target.files[0]);
+		image.classList.add('opacity-100');
+	};
+</script>

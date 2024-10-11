@@ -11,7 +11,7 @@
         <article class="min-w-full px-4 py-2 mx-auto bg-white border-2 border-black divide-y rounded-lg shadow max-w-none sm:px-6">
             <!-- Comments -->
             @foreach ($post->comments as $comment)
-                <x-comment :comment="$comment"/>
+                <x-comment :comment="$comment" :post="$post"/>
             @endforeach
             <!-- /Comments -->
         </article>

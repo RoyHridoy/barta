@@ -10,6 +10,6 @@ class CommentDestroyController extends Controller
     public function __invoke(Comment $comment)
     {
         $comment->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'You have successfully deleted the comment');
     }
 }

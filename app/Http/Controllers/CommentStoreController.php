@@ -10,9 +10,8 @@ class CommentStoreController extends Controller
 {
     public function __invoke(CommentRequest $request, Post $post)
     {
-        Comment::create([
+        auth()->user()->comments()->create([
             'body' => $request->input('body'),
-            'user_id' => auth()->id(),
             'post_id' => $post->id
         ]);
         return redirect()->back();

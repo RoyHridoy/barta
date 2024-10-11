@@ -37,7 +37,7 @@
                     <div x-show="open" @click.away="open = false"
                         class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        <a href="{{ route('profileView', auth()->user()->username) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                         <a href="{{ route('edit-profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             role="menuitem" tabindex="-1" id="user-menu-item-1">Edit Profile</a>
@@ -86,7 +86,7 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div x-show="mobileMenuOpen" class="sm:hidden" id="mobile-menu">
         @auth
-            <a href="{{ route('profile') }}"
+            <a href="{{ route('profileView', auth()->user()->username) }}"
                 class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">Your
                 Profile</a>
             <a href="{{ route('edit-profile') }}"
