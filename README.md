@@ -6,7 +6,8 @@
 - User Login (with remember me)
 - Password Change (different url)
 - Upload Profile Picture (live avatar view when uploading and deleted user's old avatar (if any))
-- Make Blade Components
+- User Can Create Post (optional photo)
+- Authorize user can edit, delete post
 
 ## How to install?
 ```bash
@@ -19,4 +20,9 @@ php artisan serve
 
 # in a separate terminal tab
 npm install && npm run dev
+```
+
+# seed data
+```bash
+php artisan db:seed
 ```
