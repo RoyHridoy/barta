@@ -5,8 +5,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
-{
+new #[Layout('layouts.guest')] class extends Component {
     public string $password = '';
 
     /**
@@ -18,10 +17,12 @@ new #[Layout('layouts.guest')] class extends Component
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::guard('web')->validate([
-            'email' => Auth::user()->email,
-            'password' => $this->password,
-        ])) {
+        if (
+            !Auth::guard('web')->validate([
+                'email' => Auth::user()->email,
+                'password' => $this->password,
+            ])
+        ) {
             throw ValidationException::withMessages([
                 'password' => __('auth.password'),
             ]);
@@ -29,7 +30,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         session(['auth.password_confirmed_at' => time()]);
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('home', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -37,18 +38,14 @@ new #[Layout('layouts.guest')] class extends Component
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
-
+    <x-slot name="title">Confirm your password</x-slot>
     <form wire:submit="confirmPassword">
         <!-- Password -->
         <div>
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="password"
-                          id="password"
-                          class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
+            <x-text-input id="password" wire:model="password" class="block w-full mt-1" type="password" name="password"
+                required autocomplete="current-password" placeholder="••••••••" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
