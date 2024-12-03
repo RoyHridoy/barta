@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('/', 'home')->name('home');
     Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::post('/posts/create')->name('posts.create');
 });
 
 Route::view('edit-profile', 'profile')->middleware(['auth'])->name('edit-profile');
