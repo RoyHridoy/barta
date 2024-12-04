@@ -16,12 +16,13 @@ class PostForm extends Form
     #[Validate('nullable|image|max:1024', as: 'photo')]
     public $tempPhoto;
 
-    public string $photo = '';
+    public ?string $photo = '';
 
-
-    public function mount()
+    public function setForm(Post $post)
     {
-
+        $this->post = $post;
+        $this->barta = $post->barta;
+        $this->photo = $post->photo;
     }
 
     public function create()
@@ -33,5 +34,15 @@ class PostForm extends Form
         }
 
         auth()->user()->posts()->create($this->all());
+    }
+    public function update()
+    {
+        $this->validate();
+
+        if ($this->tempPhoto) {
+            $this->photo = $this->tempPhoto->storePublicly('posts', 'public');
+        }
+
+        $this->post->update($this->only('barta', 'photo'));
     }
 }

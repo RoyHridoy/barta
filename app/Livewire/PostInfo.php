@@ -9,6 +9,11 @@ class PostInfo extends Component
 {
     public array $ids;
 
+    public function delete(Post $post)
+    {
+        $post->delete();
+    }
+
     public function render()
     {
         return view('livewire.post-info', [
