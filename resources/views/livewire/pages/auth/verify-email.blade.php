@@ -44,6 +44,9 @@ new #[Layout('layouts.guest')] class extends Component {
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
     @endif
+    @if (auth()->user()->hasVerifiedEmail())
+        {{ $this->redirectRoute('dashboard', navigate: true) }}
+    @endauth
     <x-slot name="title">Verify Email Address</x-slot>
     <div class="flex items-center justify-between mt-4">
         <div>

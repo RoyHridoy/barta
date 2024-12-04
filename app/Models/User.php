@@ -26,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
-        'avatar',
+        'photo',
         'bio'
     ];
 
@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $placeholderAvatar = "https://ui-avatars.com/api/?name={$this->fullName}?background=94A3B8&color=000000";
         return Attribute::get(
-            get: fn () => $this->avatar ?? $placeholderAvatar
+            get: fn () => $this->photo ? asset("storage/".$this->photo) : $placeholderAvatar
         );
     }
 

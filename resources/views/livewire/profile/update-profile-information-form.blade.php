@@ -5,13 +5,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Storage;
 
 new class extends Component {
+    use WithFileUploads;
+
+    #[Validate(['image', 'nullable', 'max:500'])]
+    public $tempPhoto;
+
     public string $firstName = '';
     public string $lastName = '';
     public string $username = '';
     public string $email = '';
-    public ?string $avatar = '';
+    public $photo;
     public ?string $bio = '';
     public string $current_password = '';
 
@@ -24,7 +32,7 @@ new class extends Component {
         $this->lastName = Auth::user()->lastName;
         $this->username = Auth::user()->username;
         $this->email = Auth::user()->email;
-        $this->avatar = Auth::user()->avatar;
+        $this->photo = Auth::user()->photo;
         $this->bio = Auth::user()->bio;
     }
 
@@ -44,7 +52,12 @@ new class extends Component {
             'current_password' => ['required', 'current_password'],
         ]);
 
-        $user->fill($validated);
+        if ($this->tempPhoto) {
+            Storage::disk('public')->delete($this->photo);
+            $this->photo = $this->tempPhoto->storePublicly('users', 'public');
+        }
+
+        $user->fill($validated + ['photo' => $this->photo]);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -88,10 +101,33 @@ new class extends Component {
     </header>
 
     <form wire:submit="updateProfileInformation" class="grid grid-cols-1 mt-6 gap-x-6 gap-y-6 sm:grid-cols-6">
+        <div class="col-span-full">
+            <label class="block text-sm font-medium leading-6 text-gray-900">Avatar</label>
+            <div class="relative flex items-center mt-2 gap-x-3">
+                <input id="avatar" class="hidden" wire:model="tempPhoto" type="file" name="avatar" />
+                @if ($this->tempPhoto)
+                    <img src="{{ $tempPhoto->temporaryUrl() }}" class="rounded-full size-12">
+                @else
+                    <img src="{{ auth()->user()->avatar }}" class="rounded-full size-12" alt="">
+                @endif
+                <label for="avatar">
+                    <div
+                        class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        Change
+                    </div>
+                </label>
+
+            </div>
+            <p class="mt-1 text-sm text-slate-400">* image size must be under 500kb</p>
+            @error('tempPhoto')
+                <span class="text-sm text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="sm:col-span-3">
             <x-input-label for="firstName" :value="__('First Name')" />
-            <x-text-input id="firstName" wire:model="firstName" name="firstName" type="text" class="block w-full mt-1"
-                required autofocus autocomplete="firstName" />
+            <x-text-input id="firstName" wire:model="firstName" name="firstName" type="text"
+                class="block w-full mt-1" required autofocus autocomplete="firstName" />
             <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
         </div>
 
@@ -155,9 +191,7 @@ new class extends Component {
         </div>
 
         <div class="flex items-center gap-4 col-span-full">
-            <x-primary-button wire:dirty.remove.class="opacity-50" wire:dirty.remove.attr="disabled" disabled
-                wire:target="email, firstName, lastName, username, bio"
-                class="opacity-50">{{ __('Update') }}</x-primary-button>
+            <x-primary-button wire:loading.attr="disabled">{{ __('Update') }}</x-primary-button>
 
             <x-action-message class="me-3" on="profile-updated">
                 {{ __('Profile Updated.') }}
