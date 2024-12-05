@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
@@ -13,7 +14,14 @@ class PostShow extends Component
 
     public function mount(Post $post)
     {
-        $this->post = $post->load('comments.author')->loadCount('comments');
+        $this->post = $post;
+        $this->refreshComment();
+    }
+
+    #[On('commentCreated')]
+    public function refreshComment()
+    {
+        $this->post = $this->post->load('comments.author')->loadCount('comments');
     }
 
     public function render()
