@@ -53,7 +53,9 @@ new class extends Component {
         ]);
 
         if ($this->tempPhoto) {
-            Storage::disk('public')->delete($this->photo);
+            if ($this->photo) {
+                Storage::disk('public')->delete($this->photo);
+            }
             $this->photo = $this->tempPhoto->storePublicly('users', 'public');
         }
 

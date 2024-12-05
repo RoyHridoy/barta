@@ -62,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected function avatar(): Attribute
     {
-        $placeholderAvatar = "https://ui-avatars.com/api/?name={$this->fullName}?background=94A3B8&color=000000";
+        $placeholderAvatar = "https://ui-avatars.com/api/?background=random&name={$this->fullName}";
         return Attribute::get(
             get: fn () => $this->photo ? asset("storage/".$this->photo) : $placeholderAvatar
         );
@@ -71,5 +71,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

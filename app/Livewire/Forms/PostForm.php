@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -40,6 +41,9 @@ class PostForm extends Form
         $this->validate();
 
         if ($this->tempPhoto) {
+            if ($this->photo) {
+                Storage::disk('public')->delete($this->photo);
+            }
             $this->photo = $this->tempPhoto->storePublicly('posts', 'public');
         }
 

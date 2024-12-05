@@ -11,13 +11,14 @@ class PostInfo extends Component
 
     public function delete(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
     }
 
     public function render()
     {
         return view('livewire.post-info', [
-            'posts' => Post::with('author')->whereIn('id', $this->ids)->latest()->get()
+            'posts' => Post::with('author')->whereIn('id', $this->ids)->withCount('comments')->latest()->get()
         ]);
     }
 }
