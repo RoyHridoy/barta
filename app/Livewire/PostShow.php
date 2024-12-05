@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
@@ -24,8 +25,16 @@ class PostShow extends Component
         $this->post = $this->post->load('comments.author')->loadCount('comments');
     }
 
+    public function deleteComment(Comment $comment)
+    {
+        $this->authorize('delete', $comment);
+        $comment->delete();
+    }
+
     public function render()
     {
-        return view('livewire.post-show');
+        return view('livewire.post-show', [
+            $this->post = $this->post->load('comments.author')->loadCount('comments')
+        ]);
     }
 }
