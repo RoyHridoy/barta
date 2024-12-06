@@ -15,7 +15,7 @@ class PostCreate extends Component
     {
         $this->form->create();
 
-        $this->redirectRoute('home');
+        $this->redirectRoute('home', navigate: true);
     }
 
     public function render()

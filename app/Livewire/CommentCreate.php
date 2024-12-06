@@ -19,7 +19,7 @@ class CommentCreate extends Component
     {
         $this->form->save();
 
-        $this->dispatch('commentCreated');
+        $this->redirectRoute('posts.show', $this->form->post_id, navigate: true);
     }
 
     public function render()

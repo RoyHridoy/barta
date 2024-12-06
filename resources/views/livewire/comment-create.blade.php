@@ -1,13 +1,13 @@
 <div>
 
     <!-- Barta Create Comment Form -->
-    <form action="" wire:submit="save()" method="POST">
+    <form action="" wire:submit="save" method="POST">
         @csrf
         <div>
             <div class="flex items-start space-x-3">
                 <!-- User Avatar -->
                 <div class="flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full object-cover" src="{{ auth()->user()->avatar }}"
+                    <img class="object-cover w-10 h-10 rounded-full" src="{{ auth()->user()->avatar }}"
                         alt="{{ auth()->user()->fullName }}" />
                 </div>
                 <!-- /User Avatar -->
@@ -30,8 +30,8 @@
         </div>
 
         <div class="flex items-center justify-end">
-            <button type="submit"
-                class="mt-2 flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white hover:bg-black">
+            <button type="submit" wire:target="form.body" wire:dirty
+                class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-white bg-gray-800 rounded-full hover:bg-black">
                 Comment
             </button>
         </div>
