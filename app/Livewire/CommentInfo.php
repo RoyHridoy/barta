@@ -25,7 +25,7 @@ class CommentInfo extends Component
     public function render()
     {
         return view('livewire.comment-info', [
-            'comments' => Comment::whereIn('id', $this->ids)->with('author')->latest()->get()
+            'comments' => Comment::whereIn('id', $this->ids)->with('author')->latest()->get(),
         ]);
     }
 }

@@ -13,6 +13,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     /**
@@ -27,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'photo',
-        'bio'
+        'bio',
     ];
 
     /**
@@ -63,8 +64,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function avatar(): Attribute
     {
         $placeholderAvatar = "https://ui-avatars.com/api/?background=random&name={$this->fullName}";
+
         return Attribute::get(
-            get: fn () => $this->photo ? asset("storage/".$this->photo) : $placeholderAvatar
+            get: fn () => $this->photo ? asset('storage/'.$this->photo) : $placeholderAvatar
         );
     }
 

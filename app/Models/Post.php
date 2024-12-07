@@ -13,7 +13,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'barta','views','likes','photo'
+        'barta', 'views', 'likes', 'photo',
     ];
 
     public function author(): BelongsTo

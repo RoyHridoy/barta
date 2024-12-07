@@ -19,7 +19,7 @@ class PostFactory extends Factory
     {
         return [
             'barta' => fake()->paragraph(),
-            'user_id' => rand(1, User::count())
+            'user_id' => rand(1, User::count()),
         ];
     }
 }

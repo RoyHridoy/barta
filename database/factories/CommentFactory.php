@@ -21,7 +21,7 @@ class CommentFactory extends Factory
         return [
             'body' => fake()->sentence(rand(6, 25)),
             'user_id' => rand(1, User::count()),
-            'post_id' => rand(1, Post::count())
+            'post_id' => rand(1, Post::count()),
         ];
     }
 }

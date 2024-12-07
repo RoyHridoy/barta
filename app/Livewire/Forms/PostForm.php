@@ -36,6 +36,7 @@ class PostForm extends Form
 
         auth()->user()->posts()->create($this->all());
     }
+
     public function update()
     {
         $this->validate();

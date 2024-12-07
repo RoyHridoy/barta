@@ -18,7 +18,7 @@ class PostInfo extends Component
     public function render()
     {
         return view('livewire.post-info', [
-            'posts' => Post::with('author')->whereIn('id', $this->ids)->withCount('comments')->latest()->get()
+            'posts' => Post::with('author')->whereIn('id', $this->ids)->withCount('comments')->latest()->get(),
         ]);
     }
 }

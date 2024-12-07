@@ -12,6 +12,7 @@ use Livewire\WithFileUploads;
 class PostEdit extends Component
 {
     use WithFileUploads;
+
     public PostForm $form;
 
     public function mount(Post $post)

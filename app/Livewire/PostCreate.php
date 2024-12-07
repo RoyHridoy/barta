@@ -9,6 +9,7 @@ use Livewire\WithFileUploads;
 class PostCreate extends Component
 {
     use WithFileUploads;
+
     public PostForm $form;
 
     public function save()

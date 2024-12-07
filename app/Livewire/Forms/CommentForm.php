@@ -10,6 +10,7 @@ use Livewire\Form;
 class CommentForm extends Form
 {
     public ?Post $post;
+
     public ?Comment $comment;
 
     #[Validate('required|string')]
@@ -24,12 +25,9 @@ class CommentForm extends Form
         $this->reset('body');
     }
 
-    public function update()
-    {
+    public function update() {}
 
-    }
-
-    public function setComment(Post $post, Comment $comment = null)
+    public function setComment(Post $post, ?Comment $comment = null)
     {
         $this->post = $post;
         $this->post_id = $post->id;
