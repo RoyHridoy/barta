@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\CommentCreateForm;
 use App\Models\Post;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
@@ -11,21 +12,6 @@ use Livewire\Component;
 class PostShow extends Component
 {
     public ?Post $post;
-
-    public ?int $totalComments;
-
-    public function mount(Post $post)
-    {
-        $this->post = $post->loadCount('comments');
-        $this->totalComments = $this->post->comments_count;
-    }
-
-    #[On('commentDeleted')]
-    public function commentDeleted()
-    {
-        $this->post->refresh();
-        $this->totalComments -= 1;
-    }
 
     public function render()
     {

@@ -12,6 +12,11 @@ class CommentPolicy
         return $user->is($comment->author);
     }
 
+    public function reply(User $user, Comment $comment): bool
+    {
+        return $user->is(auth()->user()) && $comment->parent_id === null;
+    }
+
     public function delete(User $user, Comment $comment): bool
     {
         return $user->is($comment->author);
