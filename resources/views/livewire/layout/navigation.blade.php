@@ -17,10 +17,10 @@ new class extends Component {
 
 <nav
     x-data="{ mobileMenuOpen: false, userMenuOpen: false }"
-    class="mb-9 bg-white shadow"
+    class="fixed z-40 mb-9 w-full bg-white shadow"
 >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 justify-between">
+        <div class="flex h-16 justify-between gap-x-2 sm:gap-x-8">
             <div class="flex">
                 <div class="flex flex-shrink-0 items-center">
                     <a
@@ -33,6 +33,9 @@ new class extends Component {
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
 
                 </div>
+            </div>
+            <div class="flex items-center">
+                <livewire:search />
             </div>
             <div class="hidden gap-2 sm:ml-6 sm:flex sm:items-center">
                 <button
