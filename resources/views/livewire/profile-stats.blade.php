@@ -1,5 +1,5 @@
 <div>
-    <div class="mx-auto max-w-3xl sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <!-- Cover Container -->
             <div
@@ -9,7 +9,7 @@
                     <!-- Avatar -->
                     <div class="relative">
                         <img
-                            class="h-32 w-32 rounded-full border-2 border-gray-800"
+                            class="w-32 h-32 border-2 border-gray-800 rounded-full"
                             src="{{ $user->avatar }}"
                             alt="{{ $user->fullName }}"
                         >
@@ -49,7 +49,7 @@
                     <a
                         href="{{ route('edit-profile') }}"
                         type="button"
-                        class="-m-2 flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200"
+                        class="flex items-center gap-2 px-4 py-2 -m-2 font-semibold text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@
                             viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor"
-                            class="h-5 w-5"
+                            class="w-5 h-5"
                         >
                             <path
                                 stroke-linecap="round"
@@ -71,6 +71,11 @@
                     <!-- /Edit Profile Button -->
                 @endif
             </div>
+        </div>
+
+        <div class="flex items-center justify-center my-10">
+            <h2 class="inline-block px-5 text-2xl font-medium text-center border-b-4 border-double border-b-gray-600">
+                All Posts</h2>
         </div>
 
         <div class="mt-8">
