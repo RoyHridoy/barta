@@ -1,17 +1,17 @@
 <div>
     {{-- Create Post only visible in homepage and profile stat page --}}
-    @if (request()->routeIs('home') || (request()->routeIs('profile.stats') && auth()->user()->is($user)))
+    @if (!request()->routeIs('profile.stats'))
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <form
                 wire:submit="save"
-                class="mx-auto max-w-none space-y-3 rounded-lg border-2 border-black bg-white px-4 py-5 shadow sm:px-6"
+                class="px-4 py-5 mx-auto space-y-3 bg-white border-2 border-black rounded-lg shadow max-w-none sm:px-6"
             >
                 <div>
                     <div class="flex items-start">
                         <!-- User Avatar -->
                         <div class="flex-shrink-0">
                             <img
-                                class="h-10 w-10 rounded-full object-cover"
+                                class="object-cover w-10 h-10 rounded-full"
                                 src="{{ auth()->user()->avatar }}"
                                 alt="{{ auth()->user()->fullName }}"
                             />
@@ -22,7 +22,7 @@
                         <div class="w-full font-normal text-gray-700">
                             <textarea
                                 wire:model="form.barta"
-                                class="block w-full rounded-lg border-none p-2 pt-2 text-gray-900 outline-none focus:ring-0 focus:ring-offset-0"
+                                class="block w-full p-2 pt-2 text-gray-900 border-none rounded-lg outline-none focus:ring-0 focus:ring-offset-0"
                                 name="barta"
                                 rows="2"
                                 placeholder="What's going on, {{ auth()->user()->firstName }}?"
@@ -49,7 +49,7 @@
 
                                 <label
                                     for="picture"
-                                    class="-m-2 flex cursor-pointer items-center gap-2 rounded-full p-2 text-xs text-gray-600 hover:text-gray-800"
+                                    class="flex items-center gap-2 p-2 -m-2 text-xs text-gray-600 rounded-full cursor-pointer hover:text-gray-800"
                                 >
                                     <span class="sr-only">Picture</span>
                                     <svg
@@ -58,7 +58,7 @@
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
-                                        class="h-6 w-6"
+                                        class="w-6 h-6"
                                     >
                                         <path
                                             stroke-linecap="round"
@@ -76,7 +76,7 @@
                                 type="submit"
                                 wire:dirty.remove.attr='disabled'
                                 disabled
-                                class="-m-2 flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white hover:bg-black disabled:opacity-50"
+                                class="flex items-center gap-2 px-4 py-2 -m-2 text-xs font-semibold text-white bg-gray-800 rounded-full hover:bg-black disabled:opacity-50"
                             >
                                 Post
                             </button>
