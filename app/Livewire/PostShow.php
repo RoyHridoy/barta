@@ -2,10 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Livewire\Forms\CommentCreateForm;
 use App\Models\Post;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 #[Layout('layouts.app')]

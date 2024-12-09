@@ -12,7 +12,7 @@ class CommentChunk extends Component
     public function render()
     {
         return view('livewire.comment-chunk', [
-            'comments' => Comment::whereIn('id', $this->ids)->with('author', 'children.author')->latest()->get()
+            'comments' => Comment::whereIn('id', $this->ids)->with('author', 'children.author')->latest()->get(),
         ]);
     }
 }

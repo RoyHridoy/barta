@@ -29,13 +29,17 @@ class Comments extends Component
         $comment->author()->associate(auth()->user());
         $comment->save();
 
+        if (count($this->chunks) === 0) {
+            $this->chunks[] = [];
+        }
+
         array_unshift($this->chunks[0], $comment->id);
         $this->createCommentForm->reset();
     }
 
     public function loadMore()
     {
-        if (!$this->hasMorePages()) {
+        if (! $this->hasMorePages()) {
             return;
         }
         $this->page++;

@@ -101,8 +101,6 @@
                 <div class="flex items-center gap-2 my-2 text-xs text-gray-500">
                     <span class="">{{ $post->created_at->diffForHumans() }}</span>
                     <span class="">•</span>
-                    <span> [Comment Count] comments</span>
-                    <span class="">•</span>
                     <span>{{ $post->views }} views</span>
                 </div>
             </div>

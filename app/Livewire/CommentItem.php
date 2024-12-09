@@ -12,6 +12,7 @@ class CommentItem extends Component
     public Comment $comment;
 
     public CreateCommentForm $createReplyForm;
+
     public EditCommentForm $commentEditForm;
 
     public bool $deleted = false;

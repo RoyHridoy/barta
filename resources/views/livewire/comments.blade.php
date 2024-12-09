@@ -40,11 +40,13 @@
         <h1 class="pb-4 mt-6 text-lg font-semibold border-b border-b-gray-300">
             Comments <code> ({{ $this->totalComments }})</code>
         </h1>
-        <div class="px-4 py-5 bg-white border-2 border-black rounded-lg">
-            @for ($chunk = 0; $chunk < $page; $chunk++)
-                <livewire:comment-chunk :ids="$chunks[$chunk]" :key="json_encode($chunks[$chunk])" />
-            @endfor
-        </div>
+        @if ($this->totalComments)
+            <div class="px-4 py-5 bg-white border-2 border-black rounded-lg">
+                @for ($chunk = 0; $chunk < $page; $chunk++)
+                    <livewire:comment-chunk :ids="$chunks[$chunk]" :key="json_encode($chunks[$chunk])" />
+                @endfor
+            </div>
+        @endif
 
         @if ($this->hasMorePages())
             <div class="flex items-center self-center justify-center mt-10">
