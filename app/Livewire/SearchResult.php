@@ -12,7 +12,7 @@ class SearchResult extends Component
     public $show;
 
     #[Reactive()]
-    public ?Collection $results;
+    public $posts;
 
     public function render()
     {

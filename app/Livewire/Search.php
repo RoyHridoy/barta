@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\Validate;
@@ -17,8 +18,18 @@ class Search extends Component
 
     public function render()
     {
-        return view('livewire.search', [
-            'results' => Post::where('barta', 'LIKE', '%'. $this->search .'%')->latest()->get()
-        ]);
+        $posts = [];
+        if ($this->search) {
+            $posts = Post::query()
+                ->with('author')
+                ->where('barta', 'LIKE', "%{$this->search}%")
+                ->orWhereRelation('author', 'username', 'LIKE', "%{$this->search}%")
+                ->orWhereRelation('author', function ($query) {
+                    $query->whereRaw("firstName || ' ' || lastName LIKE '%{$this->search}%'");
+                })
+                ->latest()->get();
+        }
+
+        return view('livewire.search', compact('posts'));
     }
 }

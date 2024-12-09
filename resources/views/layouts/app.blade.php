@@ -33,7 +33,7 @@
             <livewire:layout.navigation />
 
             <!-- Page Content -->
-            <main class="pb-10 pt-24">
+            <main class="pt-24 pb-10">
                 {{ $slot }}
             </main>
         </div>
