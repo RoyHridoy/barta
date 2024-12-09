@@ -34,13 +34,12 @@ class PostForm extends Form
             $this->photo = $this->tempPhoto->storePublicly('posts', 'public');
         }
 
-        auth()->user()->posts()->create($this->all());
+        return auth()->user()->posts()->create($this->all());
     }
 
     public function update()
     {
         $this->validate();
-
         if ($this->tempPhoto) {
             if ($this->photo) {
                 Storage::disk('public')->delete($this->photo);

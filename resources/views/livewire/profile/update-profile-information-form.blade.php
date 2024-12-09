@@ -102,15 +102,31 @@ new class extends Component {
         </p>
     </header>
 
-    <form wire:submit="updateProfileInformation" class="grid grid-cols-1 mt-6 gap-x-6 gap-y-6 sm:grid-cols-6">
+    <form
+        wire:submit="updateProfileInformation"
+        class="grid grid-cols-1 mt-6 gap-x-6 gap-y-6 sm:grid-cols-6"
+    >
         <div class="col-span-full">
             <label class="block text-sm font-medium leading-6 text-gray-900">Avatar</label>
             <div class="relative flex items-center mt-2 gap-x-3">
-                <input id="avatar" class="hidden" wire:model="tempPhoto" type="file" name="avatar" />
+                <input
+                    id="avatar"
+                    class="hidden"
+                    wire:model="tempPhoto"
+                    type="file"
+                    name="avatar"
+                />
                 @if ($this->tempPhoto)
-                    <img src="{{ $tempPhoto->temporaryUrl() }}" class="rounded-full size-12">
+                    <img
+                        src="{{ $tempPhoto->temporaryUrl() }}"
+                        class="rounded-full size-12"
+                    >
                 @else
-                    <img src="{{ auth()->user()->avatar }}" class="rounded-full size-12" alt="">
+                    <img
+                        src="{{ auth()->user()->avatar }}"
+                        class="rounded-full size-12"
+                        alt=""
+                    >
                 @endif
                 <label for="avatar">
                     <div
@@ -127,39 +143,96 @@ new class extends Component {
         </div>
 
         <div class="sm:col-span-3">
-            <x-input-label for="firstName" :value="__('First Name')" />
-            <x-text-input id="firstName" wire:model="firstName" name="firstName" type="text"
-                class="block w-full mt-1" required autofocus autocomplete="firstName" />
-            <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
+            <x-input-label
+                for="firstName"
+                :value="__('First Name')"
+            />
+            <x-text-input
+                id="firstName"
+                wire:model="firstName"
+                name="firstName"
+                type="text"
+                class="block w-full mt-1"
+                required
+                autofocus
+                autocomplete="firstName"
+            />
+            <x-input-error
+                class="mt-2"
+                :messages="$errors->get('firstName')"
+            />
         </div>
 
         <div class="sm:col-span-3">
-            <x-input-label for="lastName" :value="__('Last Name')" />
-            <x-text-input id="lastName" wire:model="lastName" name="lastName" type="text" class="block w-full mt-1"
-                required autofocus autocomplete="lastName" />
-            <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
+            <x-input-label
+                for="lastName"
+                :value="__('Last Name')"
+            />
+            <x-text-input
+                id="lastName"
+                wire:model="lastName"
+                name="lastName"
+                type="text"
+                class="block w-full mt-1"
+                required
+                autofocus
+                autocomplete="lastName"
+            />
+            <x-input-error
+                class="mt-2"
+                :messages="$errors->get('lastName')"
+            />
         </div>
 
         <div class="col-span-full">
-            <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" wire:model="username" name="username" type="text" class="block w-full mt-1"
-                required autofocus autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('username')" />
+            <x-input-label
+                for="username"
+                :value="__('Username')"
+            />
+            <x-text-input
+                id="username"
+                wire:model="username"
+                name="username"
+                type="text"
+                class="block w-full mt-1"
+                required
+                autofocus
+                autocomplete="username"
+            />
+            <x-input-error
+                class="mt-2"
+                :messages="$errors->get('username')"
+            />
         </div>
 
         <div class="col-span-full">
-            <x-input-label for="email" :value="__('Email Address')" />
-            <x-text-input id="email" wire:model="email" name="email" type="email" class="block w-full mt-1"
-                required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-label
+                for="email"
+                :value="__('Email Address')"
+            />
+            <x-text-input
+                id="email"
+                wire:model="email"
+                name="email"
+                type="email"
+                class="block w-full mt-1"
+                required
+                autocomplete="username"
+            />
+            <x-input-error
+                class="mt-2"
+                :messages="$errors->get('email')"
+            />
 
             @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                 <div>
                     <p class="mt-2 text-sm text-gray-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button wire:click.prevent="sendVerification"
-                            class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button
+                            wire:click.prevent="sendVerification"
+                            class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -174,10 +247,18 @@ new class extends Component {
         </div>
 
         <div class="col-span-full">
-            <label for="bio" class="block text-sm font-medium leading-6 text-gray-900">Bio</label>
+            <label
+                for="bio"
+                class="block text-sm font-medium leading-6 text-gray-900"
+            >Bio</label>
             <div class="mt-2">
-                <textarea id="bio" name="bio" rows="3" wire:model="bio"
-                    class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="3"
+                    wire:model="bio"
+                    class="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+                >
                 </textarea>
             </div>
             <p class="mt-1 text-sm leading-6 text-gray-600">
@@ -186,16 +267,31 @@ new class extends Component {
         </div>
 
         <div class="col-span-full">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" wire:model="current_password" name="password" type="password"
-                class="block w-full mt-1" required autofocus autocomplete="password" placeholder="••••••••" />
-            <x-input-error class="mt-2" :messages="$errors->get('current_password')" />
+            <x-input-label
+                for="password"
+                :value="__('Password')"
+            />
+            <x-text-input
+                id="password"
+                wire:model="current_password"
+                name="password"
+                type="password"
+                class="block w-full mt-1"
+                required
+                autofocus
+                autocomplete="password"
+                placeholder="••••••••"
+            />
+            <x-input-error
+                class="mt-2"
+                :messages="$errors->get('current_password')"
+            />
         </div>
 
         <div class="flex items-center gap-4 col-span-full">
             <x-primary-button wire:loading.attr="disabled">{{ __('Update') }}</x-primary-button>
 
-            <x-action-message class="me-3" on="profile-updated">
+            <x-action-message on="profile-updated">
                 {{ __('Profile Updated.') }}
             </x-action-message>
         </div>

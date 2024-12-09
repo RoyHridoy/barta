@@ -79,7 +79,8 @@
 
     <!-- Date Created & View Stat -->
     <div class="flex items-center gap-2 my-2 text-xs text-gray-500">
-        <span class="">{{ $post->created_at->diffForHumans() }}</span>
+        <span class="" x-human-date
+            datetime="{{ $post->created_at->toDateTimeString() }}">{{ $post->created_at->diffForHumans() }}</span>
         <span class="">•</span>
         <span>{{ $post->views }} views</span>
     </div>

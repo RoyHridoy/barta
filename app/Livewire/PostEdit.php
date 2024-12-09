@@ -24,7 +24,7 @@ class PostEdit extends Component
     {
         $this->form->update();
 
-        session()->flash('status', 'Barta successfully updated.');
+        $this->dispatch('post-updated');
     }
 
     public function render()

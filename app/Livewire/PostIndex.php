@@ -2,11 +2,30 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\PostForm;
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class PostIndex extends Component
 {
+    use WithFileUploads;
+
+    public PostForm $form;
+
+    public function save()
+    {
+        $post = $this->form->create();
+
+        if (count($this->chunks) == 0) {
+            $this->chunks[] = [];
+        }
+
+        array_unshift($this->chunks[0], $post->id);
+
+        $this->form->reset();
+    }
+
     public int $page = 0;
 
     public array $chunks;
