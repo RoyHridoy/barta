@@ -80,7 +80,7 @@ new class extends Component {
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false));
+            $this->redirectIntended(default: route('home', absolute: false));
 
             return;
         }
@@ -104,11 +104,11 @@ new class extends Component {
 
     <form
         wire:submit="updateProfileInformation"
-        class="grid grid-cols-1 mt-6 gap-x-6 gap-y-6 sm:grid-cols-6"
+        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6"
     >
         <div class="col-span-full">
             <label class="block text-sm font-medium leading-6 text-gray-900">Avatar</label>
-            <div class="relative flex items-center mt-2 gap-x-3">
+            <div class="relative mt-2 flex items-center gap-x-3">
                 <input
                     id="avatar"
                     class="hidden"
@@ -119,12 +119,12 @@ new class extends Component {
                 @if ($this->tempPhoto)
                     <img
                         src="{{ $tempPhoto->temporaryUrl() }}"
-                        class="rounded-full size-12"
+                        class="size-12 rounded-full"
                     >
                 @else
                     <img
                         src="{{ auth()->user()->avatar }}"
-                        class="rounded-full size-12"
+                        class="size-12 rounded-full"
                         alt=""
                     >
                 @endif
@@ -152,7 +152,7 @@ new class extends Component {
                 wire:model="firstName"
                 name="firstName"
                 type="text"
-                class="block w-full mt-1"
+                class="mt-1 block w-full"
                 required
                 autofocus
                 autocomplete="firstName"
@@ -173,7 +173,7 @@ new class extends Component {
                 wire:model="lastName"
                 name="lastName"
                 type="text"
-                class="block w-full mt-1"
+                class="mt-1 block w-full"
                 required
                 autofocus
                 autocomplete="lastName"
@@ -194,7 +194,7 @@ new class extends Component {
                 wire:model="username"
                 name="username"
                 type="text"
-                class="block w-full mt-1"
+                class="mt-1 block w-full"
                 required
                 autofocus
                 autocomplete="username"
@@ -215,7 +215,7 @@ new class extends Component {
                 wire:model="email"
                 name="email"
                 type="email"
-                class="block w-full mt-1"
+                class="mt-1 block w-full"
                 required
                 autocomplete="username"
             />
@@ -231,7 +231,7 @@ new class extends Component {
 
                         <button
                             wire:click.prevent="sendVerification"
-                            class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
@@ -276,7 +276,7 @@ new class extends Component {
                 wire:model="current_password"
                 name="password"
                 type="password"
-                class="block w-full mt-1"
+                class="mt-1 block w-full"
                 required
                 autofocus
                 autocomplete="password"
@@ -288,7 +288,7 @@ new class extends Component {
             />
         </div>
 
-        <div class="flex items-center gap-4 col-span-full">
+        <div class="col-span-full flex items-center gap-4">
             <x-primary-button wire:loading.attr="disabled">{{ __('Update') }}</x-primary-button>
 
             <x-action-message on="profile-updated">

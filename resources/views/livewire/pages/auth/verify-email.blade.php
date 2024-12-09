@@ -13,7 +13,7 @@ new #[Layout('layouts.guest')] class extends Component {
     public function sendVerification(): void
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+            $this->redirectIntended(default: route('home', absolute: false), navigate: true);
 
             return;
         }
@@ -45,7 +45,7 @@ new #[Layout('layouts.guest')] class extends Component {
         </div>
     @endif
     @if (auth()->user()->hasVerifiedEmail())
-        {{ $this->redirectRoute('dashboard', navigate: true) }}
+        {{ $this->redirectRoute('home', navigate: true) }}
     @endauth
     <x-slot name="title">Verify Email Address</x-slot>
     <div class="flex items-center justify-between mt-4">
@@ -55,8 +55,11 @@ new #[Layout('layouts.guest')] class extends Component {
             </x-primary-button>
         </div>
 
-        <button wire:click="logout" type="submit"
-            class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        <button
+            wire:click="logout"
+            type="submit"
+            class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
             {{ __('Log Out') }}
         </button>
     </div>
