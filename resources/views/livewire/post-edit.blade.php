@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-3xl">
-    <!-- Barta Create Post Card -->
+    <!-- Barta Edit Post Card -->
     <form
         wire:submit="update"
         class="mx-auto max-w-none space-y-3 rounded-lg border-2 border-black bg-white px-4 py-5 shadow sm:px-6"

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\PostForm;
 use App\Models\Post;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,7 +12,13 @@ class PostIndex extends Component
 {
     use WithFileUploads;
 
+    public ?User $user = null;
+
     public PostForm $form;
+
+    public int $page = 0;
+
+    public array $chunks;
 
     public function save()
     {
@@ -26,13 +33,16 @@ class PostIndex extends Component
         $this->form->reset();
     }
 
-    public int $page = 0;
-
-    public array $chunks;
-
     public function mount()
     {
-        $this->chunks = Post::latest()->pluck('id')->chunk(15)->toArray();
+        $this->chunks = Post::latest()
+            ->when($this->user, function ($query) {
+                $query->where('user_id', $this->user->id);
+            })
+            ->pluck('id')
+            ->chunk(15)
+            ->toArray();
+
         $this->loadMore();
     }
 
