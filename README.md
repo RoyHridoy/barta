@@ -1,7 +1,9 @@
 ## Scroll to load bartas
+- Try to **call less query**
 - Load Posts, Comments by Scrolling **performance measures**
 - **Comment Reply (2 level)** feature Implemented
 - **All CRUD implemented without page refresh or navigate**
+- Auto update datetime (without page refresh)
 - **user Profile with summary and personal bartas**
 - View **other user's profile** with summary and bartas
 - Barta and Profile **image edit, update, and upload with live view**
@@ -37,6 +39,12 @@ npm install && npm run dev
 ```
 
 ### You have to ensure a **mail server running** in local environment or configure a mail server in production otherwise user verification is not possible
+
+### A Demo Verified User information (You'll get this after seeding)
+```bash
+email: jhon@doe.com
+pass: password
+```
 
 # seed data
 ```bash
