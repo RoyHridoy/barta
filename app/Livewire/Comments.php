@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\CreateCommentForm;
 use App\Models\Post;
+use App\Notifications\CommentCreated;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -35,6 +36,10 @@ class Comments extends Component
 
         array_unshift($this->chunks[0], $comment->id);
         $this->createCommentForm->reset();
+
+        if ($this->post->author->id !== $comment->author->id) {
+            $this->post->author->notify(new CommentCreated($comment, $this->post->author->fullName));
+        }
     }
 
     public function loadMore()

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\CreateCommentForm;
 use App\Livewire\Forms\EditCommentForm;
 use App\Models\Comment;
+use App\Notifications\ReplyCreated;
 use Livewire\Component;
 
 class CommentItem extends Component
@@ -42,6 +43,15 @@ class CommentItem extends Component
 
         $this->dispatch('replied');
         $this->createReplyForm->reset();
+
+        if ($comment->user_id !== $this->comment->user_id) {
+            $postId = Comment::where('id', $comment->parent_id)->first()->post_id;
+            $this->comment->author->notify(new ReplyCreated(
+                $comment,
+                $postId,
+                $this->comment->author->fullName
+            ));
+        }
     }
 
     public function delete()

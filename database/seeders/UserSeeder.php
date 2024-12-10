@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class UserSeeder extends Seeder
 {
     protected static ?string $password;
+
     /**
      * Run the database seeds.
      */
@@ -21,7 +22,7 @@ class UserSeeder extends Seeder
             'email' => 'jhon@doe.com',
             'password' => static::$password ??= Hash::make('password'),
             'bio' => 'Keep Coding',
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
         User::factory(15)->create();
     }
