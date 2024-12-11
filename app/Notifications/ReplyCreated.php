@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -26,7 +27,33 @@ class ReplyCreated extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
+    }
+
+    public function toBroadCast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'postId' => $this->postId,
+            'senderName' => $this->comment->author->fullName
+        ]);
+    }
+
+    /**
+     * Get the type of the notification being broadcast.
+     */
+    public function broadcastType(): string
+    {
+        return 'comment-reply';
+    }
+
+    /**
+     * Get the notification's database type.
+     *
+     * @return string
+     */
+    public function databaseType(object $notifiable): string
+    {
+        return 'comment-reply';
     }
 
     /**
@@ -50,7 +77,8 @@ class ReplyCreated extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'postId' => $this->postId,
+            'senderName' => $this->comment->author->fullName
         ];
     }
 }

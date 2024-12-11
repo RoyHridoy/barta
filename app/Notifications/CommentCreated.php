@@ -4,7 +4,9 @@ namespace App\Notifications;
 
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,7 +17,7 @@ class CommentCreated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Comment $comment, public string $name)
+    public function __construct(public Comment $comment, public string $receiverName)
     {
         //
     }
@@ -27,7 +29,7 @@ class CommentCreated extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -37,10 +39,39 @@ class CommentCreated extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->subject('A New Comment Found')
-            ->greeting("Hi {$this->name}!")
+            ->greeting("Hi {$this->receiverName}!")
             ->line($this->comment->author->fullName.' is commented to your post!')
             ->action('See details', route('posts.show', $this->comment->post_id))
             ->line('Thank you for using our application!');
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     */
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'postId' => $this->comment->post_id,
+            'senderName' => $this->comment->author->fullName
+        ]);
+    }
+
+    /**
+     * Get the type of the notification being broadcast.
+     */
+    public function broadcastType(): string
+    {
+        return 'comment-created';
+    }
+
+    /**
+     * Get the notification's database type.
+     *
+     * @return string
+     */
+    public function databaseType(object $notifiable): string
+    {
+        return 'comment-created';
     }
 
     /**
@@ -51,7 +82,8 @@ class CommentCreated extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'postId' => $this->comment->post_id,
+            'senderName' => $this->comment->author->fullName
         ];
     }
 }
