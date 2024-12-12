@@ -128,8 +128,8 @@
             x-human-date
             datetime="{{ $post->created_at->toDateTimeString() }}"
         >{{ $post->created_at->diffForHumans() }}</span>
-        <span class="">•</span>
-        <span>{{ $post->views }} views</span>
+        {{-- <span class="">•</span>
+        <span>{{ $post->views }} views</span> --}}
     </div>
 
     <footer class="border-t border-gray-200 pt-2">
