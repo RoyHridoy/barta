@@ -16,9 +16,7 @@ class ReplyCreated extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Comment $comment, public int $postId, public string $name)
-    {
-    }
+    public function __construct(public Comment $comment, public int $postId, public string $name) {}
 
     /**
      * Get the notification's delivery channels.
@@ -34,7 +32,7 @@ class ReplyCreated extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'postId' => $this->postId,
-            'senderName' => $this->comment->author->fullName
+            'senderName' => $this->comment->author->fullName,
         ]);
     }
 
@@ -48,8 +46,6 @@ class ReplyCreated extends Notification implements ShouldQueue
 
     /**
      * Get the notification's database type.
-     *
-     * @return string
      */
     public function databaseType(object $notifiable): string
     {
@@ -61,7 +57,7 @@ class ReplyCreated extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject('A new Replied found')
             ->greeting("Hi {$this->name}!")
             ->line($this->comment->author->fullName.' is replied to your comment!')
@@ -78,7 +74,7 @@ class ReplyCreated extends Notification implements ShouldQueue
     {
         return [
             'postId' => $this->postId,
-            'senderName' => $this->comment->author->fullName
+            'senderName' => $this->comment->author->fullName,
         ];
     }
 }

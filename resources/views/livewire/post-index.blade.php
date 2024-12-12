@@ -7,7 +7,7 @@
                 class="mx-auto max-w-none space-y-3 rounded-lg border-2 border-black bg-white px-4 py-5 shadow sm:px-6"
             >
                 <div>
-                    <div class="flex items-start">
+                    <div class="flex items-start gap-2.5">
                         <!-- User Avatar -->
                         <div class="flex-shrink-0">
                             <img
@@ -19,7 +19,7 @@
                         <!-- /User Avatar -->
 
                         <!-- Content -->
-                        <div class="w-full font-normal text-gray-700">
+                        <div class="w-full rounded border border-gray-300 font-normal text-gray-700">
                             <textarea
                                 wire:model="form.barta"
                                 class="block w-full rounded-lg border-none p-2 pt-2 text-gray-900 outline-none focus:ring-0 focus:ring-offset-0"

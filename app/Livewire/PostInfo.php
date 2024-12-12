@@ -15,6 +15,11 @@ class PostInfo extends Component
         $post->delete();
     }
 
+    public function toggleLike(Post $post)
+    {
+        $post->toggleLike(auth()->user());
+    }
+
     public function render()
     {
         return view('livewire.post-info', [

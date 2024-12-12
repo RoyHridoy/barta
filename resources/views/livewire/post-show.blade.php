@@ -113,8 +113,9 @@
             <div class="flex items-center justify-between">
                 <div class="flex gap-8 text-gray-600">
                     <button
-                        x-data="{ liked: false }"
+                        x-data="{ liked: {{ $post->likedBy(auth()->user()) }} }"
                         x-on:click="liked = !liked"
+                        wire:click="toggleLike({{ $post->id }})"
                         type="button"
                         :class="{ 'text-gray-600': liked, 'text-gray-600': !liked }"
                         class="-m-2 flex items-center gap-2 rounded-full p-2 text-xs hover:text-gray-800"
@@ -149,7 +150,7 @@
                             />
                         </svg>
 
-                        <p>{{ $post->likes }}</p>
+                        <p>{{ $post->getTotalLike() }}</p>
                     </button>
                 </div>
                 <!-- Date Created & View Stat -->

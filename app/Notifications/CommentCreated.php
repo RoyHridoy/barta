@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -37,7 +36,7 @@ class CommentCreated extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject('A New Comment Found')
             ->greeting("Hi {$this->receiverName}!")
             ->line($this->comment->author->fullName.' is commented to your post!')
@@ -52,7 +51,7 @@ class CommentCreated extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'postId' => $this->comment->post_id,
-            'senderName' => $this->comment->author->fullName
+            'senderName' => $this->comment->author->fullName,
         ]);
     }
 
@@ -66,8 +65,6 @@ class CommentCreated extends Notification implements ShouldQueue
 
     /**
      * Get the notification's database type.
-     *
-     * @return string
      */
     public function databaseType(object $notifiable): string
     {
@@ -83,7 +80,7 @@ class CommentCreated extends Notification implements ShouldQueue
     {
         return [
             'postId' => $this->comment->post_id,
-            'senderName' => $this->comment->author->fullName
+            'senderName' => $this->comment->author->fullName,
         ];
     }
 }
