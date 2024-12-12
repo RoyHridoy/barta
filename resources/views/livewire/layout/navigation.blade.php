@@ -13,6 +13,7 @@ new class extends Component {
     protected $notificationMessages = [
         'comment-created' => 'commented on your post.',
         'comment-reply' => 'replied on your comment.',
+        'post-liked' => 'liked on your post!',
     ];
 
     public function mount()
@@ -184,8 +185,8 @@ new class extends Component {
                                                 ></path>
                                             </svg>
                                         </div>
-                                        <div class="flex flex-col gap-1">
-                                            <div class="flex items-center justify-center gap-x-4">
+                                        <div class="flex w-full flex-col justify-between gap-1">
+                                            <div class="flex items-center justify-between gap-x-4">
                                                 <p>
                                                     {{ $notification->data['senderName'] }}
                                                     {{ $this->notificationMessages[$notification->type] }}
@@ -195,7 +196,7 @@ new class extends Component {
                                                     fill-rule="evenodd"
                                                     clip-rule="evenodd"
                                                     viewBox="0 0 512 511.968"
-                                                    class="size-5 {{ $notification->read_at == null ? 'hidden' : '' }} opacity-60"
+                                                    class="size-4 {{ $notification->read_at == null ? 'hidden' : '' }} flex-shrink-0 opacity-60"
                                                 >
                                                     <path
                                                         fill-rule="nonzero"

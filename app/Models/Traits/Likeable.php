@@ -31,9 +31,4 @@ trait Likeable
     {
         return Redis::sismember($this->getLikeKey(), $user->id);
     }
-
-    public function toggleLike(User $user)
-    {
-        $this->likedBy($user) ? $this->removeLike($user) : $this->addLike($user);
-    }
 }
