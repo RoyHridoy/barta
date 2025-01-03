@@ -90,7 +90,6 @@ php artisan reverb:start
 php artisan queue:work
 ```
 
-# 🌐 Demo
 ### Verified User
 After seeding the database, you can log in with the following credentials:
 - Email: `jhon@doe.com`
