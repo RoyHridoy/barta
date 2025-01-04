@@ -42,6 +42,7 @@ test('profile information can be updated', function () {
         ->set('firstName', 'Test')
         ->set('lastName', 'User')
         ->set('email', 'test@example.com')
+        ->set('bio', 'Test bio information')
         ->set('current_password', 'password')
         ->call('updateProfileInformation');
 
