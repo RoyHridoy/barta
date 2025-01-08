@@ -2,40 +2,50 @@
 
 use App\Livewire\PostIndex;
 use App\Models\User;
-
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+
 use function Pest\Laravel\actingAs;
 
-it('renders post creation component', function () {
-    $user = User::factory()->create();
-    actingAs($user);
+it('ensures only an user can see barta creation form', function () {
+    $this->get(route('home'))
+        ->assertRedirect(route('login'));
+});
 
-    Livewire::test(PostIndex::class)
+it('renders post creation component', function () {
+    // Arrange
+    $user = User::factory()->create();
+
+    // Act and Assert
+    Livewire::actingAs($user)
+        ->test(PostIndex::class)
         ->assertOk()
         ->assertSeeHtml("What's going on, {$user->firstName}?")
         ->assertSee('Post')
         ->assertSee('Picture');
 });
 
-it('validates barta field', function(){
+it('validates barta field', function () {
+    // Arrange
     $user = User::factory()->create();
-    actingAs($user);
 
-    Livewire::test(PostIndex::class)
+    // Act and Assert
+    Livewire::actingAs($user)
+        ->test(PostIndex::class)
         ->assertOk()
         ->set('form.barta', '')
         ->call('save')
         ->assertHasErrors(['form.barta' => 'required']);
 });
 
-it('handles barta photo uploads', function(){
+it('handles barta photo uploads', function () {
+    // Arrange
     $user = User::factory()->create();
-    actingAs($user);
-
     Storage::fake('public');
 
+    // Act and Assert
+    actingAs($user);
     // Test with valid photo
     $photo = UploadedFile::fake()->image('photo.jpg');
     Livewire::test(PostIndex::class)
@@ -53,28 +63,32 @@ it('handles barta photo uploads', function(){
         ->assertHasErrors(['form.tempPhoto' => 'max']);
 });
 
-it('creates barta', function(){
+it('creates barta', function () {
+    // Arrange
     $user = User::factory()->create();
-    actingAs($user);
 
-    Livewire::test(PostIndex::class)
+    // Act and Assert
+    Livewire::actingAs($user)
+        ->test(PostIndex::class)
         ->set('form.barta', 'Barta content')
         ->call('save')
         ->assertHasNoErrors();
 
     $this->assertDatabaseHas('posts', [
         'user_id' => $user->id,
-        'barta' => 'Barta content'
+        'barta' => 'Barta content',
     ]);
 });
 
-it('creates barta with photo', function(){
+it('creates barta with photo', function () {
+    // Arrange
     $user = User::factory()->create();
-    actingAs($user);
-
+    Storage::fake('public');
     $photo = UploadedFile::fake()->image('photo.jpg');
 
-    Livewire::test(PostIndex::class)
+    // Act and Assert
+    Livewire::actingAs($user)
+        ->test(PostIndex::class)
         ->set('form.barta', 'Barta content')
         ->set('form.tempPhoto', $photo)
         ->call('save')
@@ -82,6 +96,9 @@ it('creates barta with photo', function(){
 
     $this->assertDatabaseHas('posts', [
         'user_id' => $user->id,
-        'barta' => 'Barta content'
+        'barta' => 'Barta content',
+        'photo' => 'posts/'.$photo->hashName(),
     ]);
+
+    Storage::disk('public')->assertExists('posts/'.$photo->hashName());
 });

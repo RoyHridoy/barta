@@ -4,6 +4,7 @@ use App\Livewire\PostIndex;
 use App\Models\Post;
 use App\Models\User;
 use Livewire\Livewire;
+
 use function Pest\Laravel\actingAs;
 
 it('renders post list component properly', function () {
@@ -13,51 +14,77 @@ it('renders post list component properly', function () {
         ->assertViewIs('livewire.post-index');
 });
 
-it('mount posts by chunks', function(){
+it('mount posts by chunks', function () {
+    // Arrange
     $user = User::factory()->create();
-
     Post::factory(20)->create(['user_id' => $user->id]);
     Post::factory(20)->create();
 
+    // Act and Assert
     Livewire::actingAs($user)
         ->test(PostIndex::class)
-        ->assertSet('chunks', function($chunks){
+        ->assertSet('chunks', function ($chunks) {
             $postsIds = Post::latest()->pluck('id')->toArray();
             $expectedCHunks = collect($postsIds)->chunk(15)->toArray();
+
             return $chunks === $expectedCHunks;
         });
 });
 
-it('loads more increments page', function(){
+it('loads more increments page', function () {
+    // Arrange
     $user = User::factory()->create();
 
+    // Act and Assert
     Livewire::actingAs($user)
         ->test(PostIndex::class)
-        ->set('page',1)
+        ->set('page', 1)
         ->call('loadMore')
-        ->assertSet('page',2);
+        ->assertSet('page', 2);
 });
 
-it('checks has more pages', function(){
+it('checks has more pages', function () {
+    // Arrange
     $user = User::factory()->create();
 
+    // Act and Assert
     $component = Livewire::actingAs($user)
         ->test(PostIndex::class)
-        ->set('chunks', [[1,2,3],[4,5,6]])
-        ->set('page',1);
+        ->set('chunks', [[1, 2, 3], [4, 5, 6]])
+        ->set('page', 1);
 
     $result = $component->instance()->hasMorePages();
     self::assertTrue($result);
 });
 
-it('checks has no pages', function(){
+it('checks has no pages', function () {
+    // Arrange
     $user = User::factory()->create();
 
+    // Act and Assert
     $component = Livewire::actingAs($user)
         ->test(PostIndex::class)
-        ->set('chunks', [[1,2,3],[4,5,6]])
-        ->set('page',2);
+        ->set('chunks', [[1, 2, 3], [4, 5, 6]])
+        ->set('page', 2);
 
     $result = $component->instance()->hasMorePages();
     self::assertFalse($result);
+});
+
+it('shows single barta page', function () {
+    // Arrange
+    $user = User::factory()->create();
+    $post = Post::factory()->create(['user_id' => User::factory()->create()]);
+
+    // Act and Assert
+    $this->actingAs($user)
+        ->get(
+            route('posts.show', $post)
+        )
+        ->assertOk()
+        ->assertSee($post->barta)
+        ->assertSee($post->created_at)
+        ->assertSee($post->author->name)
+        ->assertSee($post->author->username)
+        ->assertSee($post->author->photo);
 });

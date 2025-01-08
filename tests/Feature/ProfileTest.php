@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Livewire\Volt\Volt;
+
 use function Pest\Laravel\actingAs;
 
 test('profile page is displayed', function () {
@@ -16,14 +17,14 @@ test('profile page is displayed', function () {
         ->assertSeeVolt('profile-stats');
 });
 
-test('Profile edit page is displayed', function(){
+test('Profile edit page is displayed', function () {
     $user = User::factory()->create();
     actingAs($user);
 
     $this->get('edit-profile')->assertOk();
 });
 
-test('profile information can be visible', function() {
+test('profile information can be visible', function () {
     $user = User::factory()->create();
     actingAs($user);
     $this->get('edit-profile')
