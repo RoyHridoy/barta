@@ -16,6 +16,13 @@ class PostShow extends Component
         $post->toggleLike(auth()->user());
     }
 
+    public function delete(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+        $this->redirect(route('home', absolute: true), navigate: true);
+    }
+
     public function render()
     {
         return view('livewire.post-show');
