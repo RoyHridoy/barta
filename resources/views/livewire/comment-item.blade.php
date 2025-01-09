@@ -13,24 +13,24 @@
                         <!-- User Avatar -->
                         <div class="flex-shrink-0">
                             <img
-                                class="h-10 w-10 rounded-full object-cover"
+                                class="object-cover w-10 h-10 rounded-full"
                                 src="{{ $comment->author->avatar }}"
                                 alt="{{ $comment->author->fullName }}"
                             />
                         </div>
                         <!-- /User Avatar -->
                         <!-- User Info -->
-                        <div class="flex min-w-0 flex-1 flex-col text-gray-900">
+                        <div class="flex flex-col flex-1 min-w-0 text-gray-900">
                             <a
                                 href="{{ route('profile.stats', $comment->author->username) }}"
-                                class="line-clamp-1 font-semibold hover:underline"
+                                class="font-semibold line-clamp-1 hover:underline"
                             >
                                 {{ $comment->author->fullName }}
                             </a>
 
                             <a
                                 href="{{ route('profile.stats', $comment->author->username) }}"
-                                class="line-clamp-1 text-sm text-gray-500 hover:underline"
+                                class="text-sm text-gray-500 line-clamp-1 hover:underline"
                             >
                                 {{ '@' . $comment->author->username }}
                             </a>
@@ -41,7 +41,7 @@
                     @canany(['edit', 'delete'], $comment)
                         <!-- Card Action Dropdown -->
                         <div
-                            class="flex flex-shrink-0 self-center"
+                            class="flex self-center flex-shrink-0"
                             x-data="{ open: false }"
                         >
                             <div class="relative inline-block text-left">
@@ -49,12 +49,12 @@
                                     <button
                                         id="menu-0-button"
                                         type="button"
-                                        class="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600"
+                                        class="flex items-center p-2 -m-2 text-gray-400 rounded-full hover:text-gray-600"
                                         @click="open = !open"
                                     >
                                         <span class="sr-only">Open options</span>
                                         <svg
-                                            class="h-5 w-5"
+                                            class="w-5 h-5"
                                             viewBox="0 0 20 20"
                                             fill="currentColor"
                                             aria-hidden="true"
@@ -69,7 +69,7 @@
                                 <!-- Dropdown menu -->
                                 <div
                                     x-show="open"
-                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu"
                                     aria-orientation="vertical"
                                     aria-labelledby="user-menu-button"
@@ -79,21 +79,21 @@
                                     @can('edit', $comment)
                                         <button
                                             id="user-menu-item-0"
-                                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                                            class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
                                             role="menuitem"
                                             tabindex="-1"
                                             @click="openEdit = true, open = false"
-                                        >Edit</button>
+                                        >Edit Comment</button>
                                     @endcan
                                     @can('delete', $comment)
                                         <button
                                             id="user-menu-item-1"
                                             wire:click="delete({{ $comment->id }}); open = false"
                                             wire:confirm="Are you really sure to delete this comment?"
-                                            class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                                            class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100"
                                             role="menuitem"
                                             tabindex="-1"
-                                        >Delete</button>
+                                        >Delete Comment</button>
                                     @endcan
                                 </div>
                             </div>
@@ -116,13 +116,13 @@
                         <div class="flex items-center gap-2">
                             <button
                                 type="submit"
-                                class="mt-2 flex items-center gap-2 rounded-full border-gray-800 bg-gray-800 px-4 py-2 text-xs font-semibold text-white hover:bg-black"
+                                class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-white bg-gray-800 border-gray-800 rounded-full hover:bg-black"
                             >
                                 Update
                             </button>
                             <button
                                 type="button"
-                                class="mt-2 flex items-center gap-2 rounded-full border border-gray-700 bg-white px-4 py-2 text-xs font-semibold text-gray-800 hover:bg-gray-800 hover:text-white"
+                                class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-gray-800 bg-white border border-gray-700 rounded-full hover:bg-gray-800 hover:text-white"
                                 @click="openEdit = false"
                             >Cancel</button>
                         </div>
@@ -139,6 +139,7 @@
                 </span>
                 @can('reply', $comment)
                     <button
+                        data-comment-id="{{ $comment->id }}"
                         x-on:click='openReply = true'
                         type="button"
                         class="rounded bg-gray-300 px-2 py-0.5 text-gray-800"
@@ -152,7 +153,7 @@
                 <template x-if="openReply">
                     <form
                         wire:submit='reply'
-                        class="ml-8 mt-4 border-t border-t-gray-300 pt-4"
+                        class="pt-4 mt-4 ml-8 border-t border-t-gray-300"
                     >
                         <x-textarea
                             wire:model='createReplyForm.body'
@@ -163,13 +164,13 @@
                         <div class="flex items-center gap-x-2">
                             <button
                                 type="submit"
-                                class="mt-2 flex items-center gap-2 rounded-full bg-gray-800 px-4 py-2 text-xs font-semibold text-white hover:bg-black"
+                                class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-white bg-gray-800 rounded-full hover:bg-black"
                             >
                                 Reply
                             </button>
                             <button
                                 type="button"
-                                class="mt-2 flex items-center gap-2 rounded-full border border-gray-700 bg-white px-4 py-2 text-xs font-semibold text-gray-800 hover:bg-gray-800 hover:text-white"
+                                class="flex items-center gap-2 px-4 py-2 mt-2 text-xs font-semibold text-gray-800 bg-white border border-gray-700 rounded-full hover:bg-gray-800 hover:text-white"
                                 @click="openReply = false"
                             >Cancel</button>
                         </div>
@@ -178,7 +179,7 @@
                 @foreach ($comment->children as $child)
                     <div
                         wire:key="{{ 'reply-' . $child->id }}"
-                        class="ml-8 mt-4 rounded-lg bg-gray-100 px-4"
+                        class="px-4 mt-4 ml-8 bg-gray-100 rounded-lg"
                     >
                         <livewire:comment-item
                             :comment="$child"
