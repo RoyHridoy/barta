@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Notifications\CommentCreated;
 use Livewire\Livewire;
 
-test('comment notification', function () {
+it('ensures post author get new comment notification', function () {
     // Arrange
     $commentOwner = User::factory()->create();
     $postOwner = User::factory()->create();

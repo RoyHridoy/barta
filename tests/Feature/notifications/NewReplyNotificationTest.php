@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Notifications\ReplyCreated;
 use Livewire\Livewire;
 
-test('reply notification', function () {
+it('ensure user get comment reply notification', function () {
     // Arrange
     $commentOwner = User::factory()->create();
     $postOwner = User::factory()->create();
