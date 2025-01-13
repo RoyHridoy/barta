@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class PostInfo extends Component
 {
-    public array $ids;
+    public array $ids = [];
 
     public function delete(Post $post)
     {

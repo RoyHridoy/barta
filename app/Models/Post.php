@@ -13,6 +13,7 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
+
     use Likeable;
 
     protected $fillable = [
@@ -28,7 +29,6 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->latest();
     }
-
 
     public function toggleLike(User $user)
     {
